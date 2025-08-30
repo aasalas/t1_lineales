@@ -12,6 +12,10 @@ function params = sat_params()
     params.L = 0.01;          % H
     params.R_coil = 1.0;      % Ohm
     params.B = 2e-5;          % Tesla (valor típico en LEO - ajustar)
+
+    params.V_max = 10; % Voltaje maximo del inductor
+    params.V_min = -10; % Voltaje minimo del inductor
+    
     
     % Simulación temporal
     params.dt = 0.01;         % s (paso para integración numérica/plots)

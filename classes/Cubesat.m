@@ -2,7 +2,7 @@ classdef Cubesat
     % Cubesat: contiene inercia por eje y arreglo de magnetorquers
     properties
         I           % [Ix Iy Iz]
-        torquers    % array de Magnetorquer
+        magnetorquers    % array de Magnetorquer
     end
     methods
         function obj = Cubesat(Ivec)
@@ -11,28 +11,28 @@ classdef Cubesat
             else
                 obj.I = Ivec;
             end
-            obj.torquers = Magnetorquer.empty;
+            obj.magnetorquers = Magnetorquer.empty;
         end
         
         function obj = addMagnetorquer(obj, torq)
-            obj.torquers(end+1) = torq;
+            obj.magnetorquers(end+1) = torq;
         end
         
         function G = getTransferFunctions(obj)
             % Retorna cell array {Gx, Gy, Gz} TF V->theta por eje
-            n = length(obj.torquers);
+            n = length(obj.magnetorquers);
             G = cell(n,1);
             for k=1:n
-                G{k} = obj.torquers(k).getVtoTauTF(obj.I(k));
+                G{k} = obj.magnetorquers(k).getVtoTauTF(obj.I(k));
             end
         end
         
         function SS = getStateSpaceModels(obj)
             % Retorna cell array {SSx, SSy, SSz}
-            n = length(obj.torquers);
+            n = length(obj.magnetorquers);
             SS = cell(n,1);
             for k=1:n
-                SS{k} = obj.torquers(k).getStateSpaceElectroMech(obj.I(k));
+                SS{k} = obj.magnetorquers(k).getStateSpaceElectroMech(obj.I(k));
             end
         end
     end
